@@ -16,18 +16,17 @@ This introduction assumes you are using the computers available at FEUP. At the 
 1. Make sure the lab PC boots **Linux** (shut down and restart if Windows is running).
 2. Authenticate using your login and password.
 
-
 ## Using the terminal
 
-### What is the command-line terminal? 
+### What is the command-line terminal?
 
-A terminal lets you introduce commands that are interpreted by what is called a __command-line shell__. In this course, we will make use of it to execute programs installed in the PC. 
+A terminal lets you introduce commands that are interpreted by what is called a **command-line shell**. In this course, we will make use of it to execute programs installed in the PC.
 
-__Outside the scope of the course__:  more advanced shell commands can be used for relatively complex programming. In fact, the shell has a built-in programming language. If you wish to know more, have a look at the [Bash manual](https://www.gnu.org/software/bash/manual/bash.html) for instance.
+**Outside the scope of the course**: more advanced shell commands can be used for relatively complex programming. In fact, the shell has a built-in programming language. If you wish to know more, have a look at the [Bash manual](https://www.gnu.org/software/bash/manual/bash.html) for instance.
 
 ### Launch the Terminal application
 
-Click on __Activities__ (upper-left desktop corner) then enter __Terminal__ in the search bar. The __Terminal__ application icon should appear. Click on it to launch a terminal.
+Click on **Activities** (upper-left desktop corner) then enter **Terminal** in the search bar. The **Terminal** application icon should appear. Click on it to launch a terminal.
 
 ![](open_terminal.png)
 
@@ -37,32 +36,31 @@ Click on __Activities__ (upper-left desktop corner) then enter __Terminal__ in t
 
 The sequence of commands shown below can be used to create a `prog` (sub-)directory (also known as "folder") inside `Desktop`. Note that `Desktop` is itself a sub-directory of your _home_ directory in the file system.
 
-In a Linux terminal, usually the _home directory_ is represented as a `~`, so if you see a path that starts with `~`, this means the path starts at the _home directory_.  
+In a Linux terminal, usually the _home directory_ is represented as a `~`, so if you see a path that starts with `~`, this means the path starts at the _home directory_.
 
-Other commands shown below also illustrate common file manipulations (copying, removing, etc).  
+Other commands shown below also illustrate common file manipulations (copying, removing, etc).
 
 In the listing, note that `$` is the symbol indicating the command prompt (it could be slightly different in your PC), and sequences starting with `#` are comments.
 
-   
 ```
-$ # Get current working directory  
-$ pwd  
+$ # Get current working directory
+$ pwd
 /home/upXXXXXXXXX
 $ # List contents of current directory
 $ ls
 [... other files/directories may appear here ...]
-Desktop 
+Desktop
 [...]
 $ # Change working directory to Desktop
 $ cd Desktop
-$ pwd  
+$ pwd
 /home/upXXXXXXXXX/Desktop
 $ # Create sub-directory prog inside current working directory
 $ mkdir prog
 $ cd prog
-$ pwd  
+$ pwd
 /home/upXXXXXXXXX/Desktop/prog
-$ # Create a text file named test.txt with a line 
+$ # Create a text file named test.txt with a line
 $ # containing "We will learn C++"
 $ echo We will learn C++ > test.txt
 $ # Check that it has been created
@@ -76,7 +74,7 @@ $ cp test.txt test2.txt
 $ ls
 test.txt    test2.txt
 $ cat test2.txt
-We will learn C++ 
+We will learn C++
 $ # Remove test2.txt
 $ rm test2.txt
 $ ls
@@ -89,7 +87,7 @@ $ # Now remove test3.txt making directory empty
 $ rm test3.txt
 $ ls
 $ # Go back to Desktop directory
-$ cd .. 
+$ cd ..
 $ pwd
 /home/upXXXXXXXXX/Desktop
 $ # Go back to home directory
@@ -97,52 +95,51 @@ $ cd ..
 $ pwd
 /home/upXXXXXXXXX
 ```
-   
-__Command summary__
-   
-Command | Use for ...
---------|--------
-`cat`| showing the contents of files
-`cd` | changing the current working directory.
-`cp` | copying files
-`echo`| echoing text (example above redirects output to a file using `>`)
-`ls` | listing the contents of a directory
-`mkdir` | creating a directory
-`mv` | renaming / moving files
-`pwd` | printing the current working directory
-`rm` | removing files
+
+**Command summary**
+
+| Command | Use for ...                                                       |
+| ------- | ----------------------------------------------------------------- |
+| `cat`   | showing the contents of files                                     |
+| `cd`    | changing the current working directory.                           |
+| `cp`    | copying files                                                     |
+| `echo`  | echoing text (example above redirects output to a file using `>`) |
+| `ls`    | listing the contents of a directory                               |
+| `mkdir` | creating a directory                                              |
+| `mv`    | renaming / moving files                                           |
+| `pwd`   | printing the current working directory                            |
+| `rm`    | removing files                                                    |
 
 For reference and further examples of these and other commands, you may check a number of references online, for instance:
 
 - [SS64.com - An A-Z Index of the Linux command line: bash + utilities](https://ss64.com/bash/)
 - [LinuxHandbook.com - A to Z Linux Commands](https://linuxhandbook.com/a-to-z-linux-commands/)
 
-
 If you want to learn more about the command line, there is a tutorial available from Ubuntu: [The Linux command line for beginners](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview).
 
 ## Compile and run "Hello world!" in C++
 
-### 3.1. Get the necessary files
+### Get the necessary files
 
 Download these two files:
 
-1. `hello.cpp` (<a href="hello.cpp?forcedownload=1">download</a>): the C++ source code of the "Hello world!" program; and
-2. `Makefile` (<a href="Makefile?forcedownload=1">download</a>): Makefile for compilation.
+1. [`hello.cpp`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/hello.cpp): the C++ source code of the "Hello world!" program
+2. [`CMakeLists.txt`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/CMakeLists.txt): CMake build file for compilation.
 
 Usually the files will be downloaded automatically to the `Downloads` directory.
-You can copy them to the `prog` directory you created in  previously (__step 2__) using `cp`.
+You can copy them to the `prog` directory you created in previously (**step 2**) using `cp`.
 
 ```
 $ # "cd" with no arguments: working directory set to home directory
-$ cd  
+$ cd
 $ pwd
 /home/upXXXXXXX
-$ cp Downloads/hello.cpp Downloads/Makefile Desktop/prog
+$ cp Downloads/hello.cpp Downloads/CMakeLists.txt Desktop/prog
 $ ls Desktop/prog
-hello.cpp Makefile 
+hello.cpp CMakeLists.txt
 ```
 
-### 3.2. The source code
+### The source code
 
 The `hello.cpp` file contains the C++ source code of a program that prints "Hello world!":
 
@@ -151,70 +148,73 @@ The `hello.cpp` file contains the C++ source code of a program that prints "Hell
  A program that prints "Hello world!".
 */
 #include <iostream>
-using namespace std;
 
 int main() {
-  // Print the message 
-  cout << "Hello world!\n";
+
+  // Print the message
+  std::cout << "Hello world!\n";
+
   return 0;
 }
 ```
 
 This example gives you a first impression of C++ syntax:
 
-- __Comments__ may be multi-line, beginning with `/*` and ending with `*/`, as in 
-  
+- **Comments** may be multi-line, beginning with `/*` and ending with `*/`, as in
+
   ```
   /*
   A program that prints "Hello world!".
   */
   ```
-  
+
   or single-line, beggining with `//`, as in
-  
+
   ```
-  // Print the message 
+  // Print the message
   ```
 
-- Code indentation (using spaces, line breaks, tabs) __has no semantic meaning__, as in Python. Programs should be well indented for readability, though!
+- Code indentation (using spaces, line breaks, tabs) **has no semantic meaning**, as in Python. Programs should be well indented for readability, though!
 
-- The `#include` and `using` directives shown
-   
+- The `#include` directive
+
   ```
   #include <iostream>
-  using namespace std;
   ```
-  
-  are required to import some C++ definitions related
-  to I/O in the `std` namespace, roughly similar to a Python `import` statement. Later in the course we will cover these directives in more detail.
 
-- `main` is the program entry __function__ with a body of instructions between `{` and `}`. Individual instructions are terminated with a semi-colon (`;`), as in 
+  is required to import some C++ definitions related
+  to I/O, and is roughly similar to a Python `import` statement. Definitions in the `<iostream>` include are in the `std` namespace, we will need to refer to it when using those definitions.
+  Later in the course we will cover these directives in more detail.
 
-   ```
-   cout << "Hello world!\n";
-   return 0;
-   ```
+- `main` is the program entry **function** with a body of instructions between `{` and `}`. Individual instructions are terminated with a semi-colon (`;`), as in
+
+  ```
+  std::cout << "Hello world!\n";
+  return 0;
+  ```
 
 - The "Hello world!" message is printed by
 
   ```
-  cout << "Hello world!\n";
+  std::cout << "Hello world!\n";
   ```
-  
-  where `cout` identifies the standard output stream 
-  of the program, `<<` is called the stream insertion operator, and `"Hello world!\n"` is the string to print.
-  
 
-- As you may note, `main` returns `0`. This is just a standard convention: `0` tells the operating system that the program executed successfully without errors.
+  where `std::cout` identifies the standard output stream
+  of the program, and `"Hello world!\n"` is the string to print.
 
+  `<<` is the left-shift operator, but in this context represents the stream insertion operator (the same way `+` in Python can mean to add or concatenate, depending on the types of the operands),
+
+  Notice that since the definition `cout` is in the namespace `std`, to refer to it we need to use `std::cout`.
+
+- As you may note, `main` returns `0`. This is just a standard convention: `0` tells the operating system that the program executed successfully without errors. When there are errors, a program should return a value different than `0` (e.g., `-1`).
 
 ### 3.3. Compile the program using GCC
 
-__To run the "Hello world!" program you need to compile it first__, that is, to generate an executable file containing binary machine instructions from the source code. This can be done using the GCC C++ compiler, that is, the `g++` program:
+**To run the "Hello world!" program you need to compile it first**, that is, to generate an executable file containing binary machine instructions from the source code. This can be done using the GCC C++ compiler, that is, the `g++` program:
 
 ```
 $ cd Desktop/prog
-$ cat hello.cpp      # will show the contents above 
+$ cat hello.cpp      # will show the contents above
 [...]
 $ # Compile the program
 $ g++ hello.cpp -o hello
@@ -222,7 +222,7 @@ $ ls
 Makefile hello hello.cpp
 ```
 
-The execution above of `g++ hello.cpp -o hello` compiles the C++ source code in `hello.cpp` to an executable file called `hello` (with no extension). We can now run the executable file ... 
+The execution above of `g++ hello.cpp -o hello` compiles the C++ source code in `hello.cpp` to an executable file called `hello` (with no extension). We can now run the executable file ...
 
 ```
 $ ./hello
@@ -231,9 +231,9 @@ Hello world!
 
 ### 3.4. Compile the program using make
 
-`make` is a command-line utility for building programs according to configurations defined in a text file usually called `Makefile`. 
+`make` is a command-line utility for building programs according to configurations defined in a text file usually called `Makefile`.
 
-Make sure `Makefile` is in the `prog` directory  (recall step 3.1 above) and remove the `hello` executable. Then, you may simply type `make hello` to compile the "Hello world!" program again:
+Make sure `Makefile` is in the `prog` directory (recall step 3.1 above) and remove the `hello` executable. Then, you may simply type `make hello` to compile the "Hello world!" program again:
 
 ```
 $ # Remove the executable just to make sure
@@ -251,11 +251,11 @@ $ make hello
 make: `hello' is up to date.
 ```
 
-Note that `make` only trigger program compilation if there are source code changes more recent than the corresponding executable's compile time, as illustrated above for the output of the second `make hello` command: ``make:  `hello' is up to date.``
+Note that `make` only trigger program compilation if there are source code changes more recent than the corresponding executable's compile time, as illustrated above for the output of the second `make hello` command: `` make:  `hello' is up to date. ``
 
 The `Makefile` we use customises C++ compilation with various options,
-e.g., `-std=c++11` sets the use of the C++ 2011 language standard.  Check the [information available at GitHub](https://github.com/progleic/setup#compiler-settings-and-their-meaning) for details on the meaning of each option used.
-Bear in mind that __these same options will be configured in Moodle's automated code correction plugin  (CodeRunner)__ throughout the semester. Failing to use the proper `Makefile` may lead to different behavior in program compilation or execution.
+e.g., `-std=c++11` sets the use of the C++ 2011 language standard. Check the [information available at GitHub](https://github.com/progleic/setup#compiler-settings-and-their-meaning) for details on the meaning of each option used.
+Bear in mind that **these same options will be configured in Moodle's automated code correction plugin (CodeRunner)** throughout the semester. Failing to use the proper `Makefile` may lead to different behavior in program compilation or execution.
 
 ## Environment Setup
 

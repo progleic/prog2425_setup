@@ -1,8 +1,12 @@
-#include "hello.h"
-
+/*
+ A program that prints "Hello world!".
+*/
 #include <iostream>
-using namespace std;
 
-void say_hello() {
-  cout << "Hello world!\n";
+int main() { 
+
+  // Print the message 
+  std::cout << "Hello world!\n";
+
+  return 0; 
 }

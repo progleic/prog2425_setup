@@ -7,7 +7,7 @@ This repository contains an introduction to the programming environment used in 
 - [Using Linux](#using-linux)
 - [Using the terminal](#using-the-terminal)
 - [Compile and run "Hello world!" in C++](#compile-and-run-hello-world-in-c)
-- VSCode for editing programs
+- [Using VSCode](#using-vscode)
 
 This introduction assumes you are using the computers available at FEUP. At the end of the document you also have a [section about setting up the environment in your PC](#environment-setup).
 

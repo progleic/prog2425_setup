@@ -42,7 +42,7 @@ Other commands shown below also illustrate common file manipulations (copying, r
 
 In the listing, note that `$` is the symbol indicating the command prompt (it could be slightly different in your PC), and sequences starting with `#` are comments.
 
-```
+```bash
 $ # Get current working directory
 $ pwd
 /home/upXXXXXXXXX
@@ -129,7 +129,7 @@ Download these two files:
 Usually the files will be downloaded automatically to the `Downloads` directory.
 You can copy them to the `prog` directory you created in previously (**step 2**) using `cp`.
 
-```
+```bash
 $ # "cd" with no arguments: working directory set to home directory
 $ cd
 $ pwd
@@ -143,7 +143,7 @@ hello.cpp CMakeLists.txt
 
 The `hello.cpp` file contains the C++ source code of a program that prints "Hello world!":
 
-```
+```cpp
 /*
  A program that prints "Hello world!".
 */
@@ -162,7 +162,7 @@ This example gives you a first impression of C++ syntax:
 
 - **Comments** may be multi-line, beginning with `/*` and ending with `*/`, as in
 
-  ```
+  ```cpp
   /*
   A program that prints "Hello world!".
   */
@@ -170,7 +170,7 @@ This example gives you a first impression of C++ syntax:
 
   or single-line, beggining with `//`, as in
 
-  ```
+  ```cpp
   // Print the message
   ```
 
@@ -178,7 +178,7 @@ This example gives you a first impression of C++ syntax:
 
 - The `#include` directive
 
-  ```
+  ```cpp
   #include <iostream>
   ```
 
@@ -188,14 +188,14 @@ This example gives you a first impression of C++ syntax:
 
 - `main` is the program entry **function** with a body of instructions between `{` and `}`. Individual instructions are terminated with a semi-colon (`;`), as in
 
-  ```
+  ```cpp
   std::cout << "Hello world!\n";
   return 0;
   ```
 
 - The "Hello world!" message is printed by
 
-  ```
+  ```cpp
   std::cout << "Hello world!\n";
   ```
 
@@ -212,7 +212,7 @@ This example gives you a first impression of C++ syntax:
 
 **To run the "Hello world!" program you need to compile it first**, that is, to generate an executable file containing binary machine instructions from the source code. This can be done using the GCC C++ compiler, that is, the `g++` program:
 
-```
+```bash
 $ cd Desktop/prog
 $ cat hello.cpp      # will show the contents above
 [...]
@@ -224,38 +224,60 @@ Makefile hello hello.cpp
 
 The execution above of `g++ hello.cpp -o hello` compiles the C++ source code in `hello.cpp` to an executable file called `hello` (with no extension). We can now run the executable file ...
 
-```
+```bash
 $ ./hello
 Hello world!
 ```
 
-### 3.4. Compile the program using make
+Note: Compiling C++ code can be complex and on some setups, compiling by hand with this simple command might not work. For instance, if you are on Windows and using the MSYS version of the Clang compiler, you might need to add the flag `-lstdc++` to be able to compile. In the next section we will present a more robust way of compiling C++ code.
 
-`make` is a command-line utility for building programs according to configurations defined in a text file usually called `Makefile`.
+### 3.4. Compile the program using CMake
 
-Make sure `Makefile` is in the `prog` directory (recall step 3.1 above) and remove the `hello` executable. Then, you may simply type `make hello` to compile the "Hello world!" program again:
+Due to C++'s complex and diverse history, it has a very fragmented build automation landscape.
+So, unlike many modern programming languages that standardize around a single build system, the C++ ecosystem has a variety of tools, approaches, and practices.
 
-```
+One of the first of these tools is `make`, a command-line utility for building programs according to configurations defined in a text file usually called `Makefile`. However, this is just one of the several possible tools, and is currently considered to be a very low-level build system, requiring a lot of manual effort from the programmer.
+
+**CMake** is what is considered a _meta-build tool_, which means that instead of directly compiling code, CMake will generate the build files for a variety of build systems. In FEUP PCs, CMake will generate by default a `Makefile` to be run with the command `make`.
+
+Compiling C++ code can generate many temporary files, and to avoid poluting the source folder with these files, developers employ what is usually called **out-of-source builds**. This is simply having a separate subfolder for the compilation, usually called `build`, where the temporary files will be written.
+
+To compile your program using CMake, make sure the file `CMakeLists.txt` is in the `prog` directory (recall step 3.1 above) and remove the `hello` executable, if you created it. The first step will be to generate the `Makefile` that will compile your code inside a `build` subfolder:
+
+```bash
 $ # Remove the executable just to make sure
 $ rm hello
 $ ls
-hello.cpp Makefile
+hello.cpp CMakeLists.txt
+$ # Create a build folder
+$ mkdir build
+$ # Go inside the build folder
+$ cd build
+$ # Generate the Makefile, you have to provide as input the folder
+$ # that contains the file CMakeLists.txt
+$ cmake ..
 $ # Compile the program using make
 $ make hello
-g++ -std=c++11 [... other options ...] hello.cpp   -o hello
+[ 50%] Building CXX object CMakeFiles/hello.dir/hello.cpp.obj
+[100%] Linking CXX executable hello
+[100%] Built target hello
 $ # Execute the program as before
 $ ./hello
 Hello world!
 $ # make won't recompile if the source code file does not change
 $ make hello
-make: `hello' is up to date.
+[100%] Built target hello
 ```
 
-Note that `make` only trigger program compilation if there are source code changes more recent than the corresponding executable's compile time, as illustrated above for the output of the second `make hello` command: `` make:  `hello' is up to date. ``
+_Tip:_ You can tell CMake to create the `build` subfolder by using the flag `-B`, i.e., `cmake -B build`.  Note that since you are in the folder with the file `CMakeLists.txt`, you do not need to indicate the folder (`..` in the previous example). Also, you will still need to enter the `build` folder before calling `make` (i.e., `cd build`).
 
-The `Makefile` we use customises C++ compilation with various options,
-e.g., `-std=c++11` sets the use of the C++ 2011 language standard. Check the [information available at GitHub](https://github.com/progleic/setup#compiler-settings-and-their-meaning) for details on the meaning of each option used.
-Bear in mind that **these same options will be configured in Moodle's automated code correction plugin (CodeRunner)** throughout the semester. Failing to use the proper `Makefile` may lead to different behavior in program compilation or execution.
+You only need to call CMake once, to generate the build file. After that first call, you will be using the commands for the build tool that was generated (`make`, in this case).
+
+Also, `make` will only trigger a program compilation if there are source code changes more recent than the corresponding executable's compile time, as illustrated above for the output of the second `make hello` command, which immediately says that the target is built.
+
+The given file `CMakeLists.txt` customises C++ compilation with various options,
+e.g., `-std=c++17` sets the use of the C++ 2017 language standard. Check the [information available at the setup section](#compiler-settings-and-their-meaning) for details on the meaning of each option used.
+Bear in mind that **these same options will be configured in Moodle's automated code correction plugin (CodeRunner)** throughout the semester. Failing to use the given `CMakeLists.txt` may lead to different behavior in program compilation or execution.
 
 ## Environment Setup
 
@@ -276,14 +298,14 @@ Use this [Makefile](Makefile).
 
 To compile program `x` with source code `x.cpp` it then suffices to execute `make x`:
 
-```
+```bash
 $ make x
 g++ -std=c++11 -pedantic -Wall -Wuninitialized -Werror -g  -lm -fsanitize=address -fsanitize=undefined     x.cpp   -o x
 ```
 
 To compile a program (`PROG`) with several sources (`CPP_FILES`) and headers (`HEADERS`) execute `make PROG=... CPP_FILES="..." HEADERS="..."`, for instance:
 
-```
+```bash
 $ make PROG=hello CPP_FILES="hello.cpp hello_main.cpp" HEADERS="hello.h"
 g++ -std=c++11 -pedantic -Wall -Wuninitialized -Werror -g  -lm -fsanitize=address -fsanitize=undefined  hello.cpp hello_main.cpp -o hello
 ```
@@ -312,13 +334,13 @@ There are several Linux distributions, e.g., [Ubuntu](https://ubuntu.com/tutoria
 
 Package [`build-essential`](https://packages.ubuntu.com/focal/build-essential) contains GCC and Make. On Ubuntu for instance, this package can be installed as follows:
 
-```
+```bash
 sudo apt install build-essential
 ```
 
 To install GDB as well, execute:
 
-```
+```bash
 sudo apt install gdb
 ```
 
@@ -333,7 +355,7 @@ WSL will provide you with a _"GNU/Linux environment -- including most command-li
 If you configure WSL to run Ubuntu, then you may install GCC and GDB as illustrated previously for (standalone) Linux;
 simply run the following commands in the WSL command line:
 
-```
+```bash
 sudo apt install build-essential
 sudo apt install gdb
 ```

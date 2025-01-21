@@ -269,7 +269,7 @@ $ make hello
 [100%] Built target hello
 ```
 
-_Tip:_ You can tell CMake to create the `build` subfolder by using the flag `-B`, i.e., `cmake -B build`.  Note that since you are in the folder with the file `CMakeLists.txt`, you do not need to indicate the folder (`..` in the previous example). Also, you will still need to enter the `build` folder before calling `make` (i.e., `cd build`).
+_Tip:_ You can tell CMake to create the `build` subfolder by using the flag `-B`, i.e., `cmake -B build`. Note that since you are in the folder with the file `CMakeLists.txt`, you do not need to indicate the folder (`..` in the previous example). Also, you will still need to enter the `build` folder before calling `make` (i.e., `cd build`).
 
 You only need to call CMake once, to generate the build file. After that first call, you will be using the commands for the build tool that was generated (`make`, in this case).
 
@@ -279,12 +279,74 @@ The given file `CMakeLists.txt` customises C++ compilation with various options,
 e.g., `-std=c++17` sets the use of the C++ 2017 language standard. Check the [information available at the setup section](#compiler-settings-and-their-meaning) for details on the meaning of each option used.
 Bear in mind that **these same options will be configured in Moodle's automated code correction plugin (CodeRunner)** throughout the semester. Failing to use the given `CMakeLists.txt` may lead to different behavior in program compilation or execution.
 
+## Using VSCode
+
+### Launch VSCode
+
+Use the **Activities** search bar to look for Visual Studio Code. Then launch it.
+
+![](launch_vscode.png)
+
+### Open directory
+
+Choose **File > Open Folder** and select the `Desktop/prog` directory used in previous steps.
+
+![](vscode_open_folder_1.png)
+
+![](vscode_open_folder_2.png)
+
+### Inspect files and source code
+
+You may now browse the folder contents and have an editor window for
+source code.
+
+![](vscode_perspective.png)
+
+### Launch embedded terminal
+
+You can also launch the embedded terminal to execute commands, in particular to compile and execute programs.
+
+![](vscode_terminal_1.png)
+
+![](vscode_terminal_2.png)
+
+### Create a new program
+
+Let us create another C++ program with the
+following code:
+
+```cpp
+#include <iostream>
+
+int main() {
+  int value;
+  std::cin >> value;
+  std::cout << "The value you entered was: " << value << "!\n";
+  return 0;
+}
+```
+
+This program reads an integer value input by the user and then prints it.
+
+In VSCode you can create the new program, compile and run it as follows:
+
+- Access **File > New Text File**.
+- Copy the C++ code above to the editor tab for the new file.
+- Access **File > Save**. Give the file a name, e.g., `enter_value.cpp`.
+- Use the embedded terminal to compile and run the program as in the "Hello world!" example.
+
+![](vscode_new_text_file.png)
+
+![](vscode_save_file.png)
+
+![](vscode_terminal_3.png)
+
 ## Environment Setup
 
 ### Basic requirements
 
 1. Linux or Linux-compatible environment.
-2. Required installation: [GCC](https://gcc.gnu.org) (C/C++ compiler) and [Make](https://www.gnu.org/software/make/) (build tool).
+2. Required installation: [GCC](https://gcc.gnu.org) (C/C++ compiler), [Make](https://www.gnu.org/software/make/) (build tool) and [CMake](https://cmake.org/) (meta-build tool).
 3. Optional (but recommended): [GDB](https://www.sourceware.org/gdb/) (C/C++ debugger).
 4. [Visual Studio Code](https://code.visualstudio.com/) or a simple text editor of your choice.
 
@@ -292,34 +354,58 @@ Bear in mind that **these same options will be configured in Moodle's automated 
 
 ### Compilation settings
 
-#### `Makefile`
+#### CMake
 
-Use this [Makefile](Makefile).
+During this course you will not need to modify the `CMakeLists.txt` file, however, if you want to create your own programs, you can use this [`CMakeLists.txt`](CMakeLists.txt) as a base.
 
-To compile program `x` with source code `x.cpp` it then suffices to execute `make x`:
+_Tip_: Remove the line `add_executable(hello hello.cpp)` if you want to remove the compilation of that program from your build file.
+
+To compile program `x` with source code `x.cpp` you have to add an `add_executable` command in the `CMakeLists.txt` file:
+
+```cmake
+# ...other commands
+add_executable(x x.cpp)
+```
+
+This will enable the comand `make x` after running `make` at least once after the changes (or when running the `cmake` command):
 
 ```bash
+$ make
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/upxxxxxxxxx/prog/build
+[ 50%] Built target hello
+[ 75%] Building CXX object CMakeFiles/x.dir/x.cpp.obj
+[100%] Linking CXX executable x.exe
+[100%] Built target x
 $ make x
-g++ -std=c++11 -pedantic -Wall -Wuninitialized -Werror -g  -lm -fsanitize=address -fsanitize=undefined     x.cpp   -o x
+[100%] Built target x
 ```
 
-To compile a program (`PROG`) with several sources (`CPP_FILES`) and headers (`HEADERS`) execute `make PROG=... CPP_FILES="..." HEADERS="..."`, for instance:
+To compile a program with several sources, specify the required files in the `add_executable` command:
 
-```bash
-$ make PROG=hello CPP_FILES="hello.cpp hello_main.cpp" HEADERS="hello.h"
-g++ -std=c++11 -pedantic -Wall -Wuninitialized -Werror -g  -lm -fsanitize=address -fsanitize=undefined  hello.cpp hello_main.cpp -o hello
+```cmake
+add_executable(hello_again hello_again.cpp say_hello.cpp)
 ```
+
+If the program requires header files (i.e., files with extension .h), after you declare the program (i.e., `hello_again`) with the `add_executable` command, you can use the command `target_include_directories`:
+
+```cmake
+target_include_directories(hello_again PUBLIC include)
+```
+
+`include` is the path to the folder with the header files, relative to the `CMakeLists.txt` file, and `PUBLIC` is a keyword specifying the scope of the include (could be `INTERFACE`, `PUBLIC` or `PRIVATE`, for more details you can check [here](https://cmake.org/cmake/help/latest/command/target_include_directories.html)).
 
 #### Compiler settings and their meaning
 
-(according to Makefile contents)
+(according to `CMakeLists.txt` contents)
 
 | Option                                    | Meaning                                                                                                                                                                                          |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `-std=c++11` `-pedantic`                  | Set C++ 2011 as the language standard, and enforce it strictly.                                                                                                                                  |
+| `-std=c++17` `-pedantic`                  | Set C++ 2017 as the language standard, and enforce it strictly.                                                                                                                                  |
 | `-Wall -Wuninitialized -Werror`           | Generate all standard warnings, warnings for uninitialized variables, and treat warnings as compilation errors.                                                                                  |
 | `-g`                                      | Generate executable with debug symbols, suitable for use with GDB.                                                                                                                               |
-| `-lm`                                     | Link with math library.                                                                                                                                                                          |
+| `link_libraries(m)` (or `-lm`)            | Link with math library.                                                                                                                                                                          |
 | `-fsanitize=address -fsanitize=undefined` | Enable the use of [AddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer) and [Undefined Behavior Sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html) |
 
 ## Development environment for your PC
@@ -338,6 +424,12 @@ Package [`build-essential`](https://packages.ubuntu.com/focal/build-essential) c
 sudo apt install build-essential
 ```
 
+To install CMake execute:
+
+```bash
+sudo apt install cmake
+```
+
 To install GDB as well, execute:
 
 ```bash
@@ -352,25 +444,37 @@ Use the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/win
 
 WSL will provide you with a _"GNU/Linux environment -- including most command-line tools, utilities, and applications -- directly on Windows, unmodified, without the overhead of a traditional virtual machine or dualboot setup"_.
 
-If you configure WSL to run Ubuntu, then you may install GCC and GDB as illustrated previously for (standalone) Linux;
+If you configure WSL to run Ubuntu, then you may install GCC, CMake and GDB as illustrated previously for (standalone) Linux;
 simply run the following commands in the WSL command line:
 
 ```bash
 sudo apt install build-essential
+sudo apt install cmake
 sudo apt install gdb
 ```
 
-TODO: Warning about accessing files from Windows folders is extremely slow. For the purposes of this class it might be ok though. However, if you are having perfomance problems, consider accessing files on from native WSL folders (i.e., that do not have a path such as XXX).
+**Warning**: File access in WSL directly from Windows folders (instead of WSL native folders) is extremely slow. For the purposes of this course it might be ok though. However, if you are having perfomance problems, consider accessing files from native WSL folders (i.e., that do not have a path such as `/mnt/c/...`).
 
 ##### Alternative - Linux VM image
 
 Use [Virtual Box](https://www.virtualbox.org/) for running a Linux VM,
 e.g., check this [guide for Ubuntu](https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview).
 
-##### NOT RECOMMENDED!
+##### Alternative - MSYS/MinGW
 
-[Mingw](https://www.mingw-w64.org/) or [Cygwin](http://cygwin.com/) are NOT recommended. The GCC compiler bundled with these environments may not
-contain all the required features.
+The previous solutions will generate Linux executables. To generate native Windows executables you will need a Windows compiler. The default Windows C++ compiler is **MSVC** (Microsoft C++ Compiler), however its build environment and tooling is very different from the Linux environment presented here.
+
+To be able to build native Windows applications using a Linux-like environment you can use **MinGW** (Minimalist GNU for Windows) together with **MSYS** (Minimal SYStem).
+
+MinGW provides a collection of build tools, similar to what you get from `build-essentials`, but compiled natively for Windows.
+
+MSYS provides a lightweight POSIX-like command-line environment, similar to `bash`, and enables running build scripts and tools originally designed for Linux systems, but natively on Windows.
+
+Installation of this environment is out-of-scope for this course, but MSYS provides an [easy-to-use installer](https://www.msys2.org/).
+
+**Warning**: The flags `-fsanitize=address` and `-fsanitize=undefined` do not work with the default C++ compilers of MinGW. If you want to keep those flags in a MinGW build environment, you have to use a special version of `clang` (another open-source C++ compiler), `g++` will not work.
+
+To install the `clang64` version in MinGW use the command `pacman -S mingw-w64-clang-x86_64-clang`. When compiling (or generating the build files with CMake), make sure that the executable that is used is `/clang64/bin/clang`. The default executable `/mingw64/bin/clang` will not support the sanitization flags.
 
 #### MacOS
 
@@ -394,16 +498,14 @@ Check the instructions given for Windows and VirtualBox above.
 
 #### Visual Studio Code setup
 
-**Note**: Visual Studio Code does not include GCC, GDB or Make. Install those tools first as described above.
+**Note**: Visual Studio Code does not include GCC, GDB, Make or CMake. Install those tools first as described above.
 
 Steps:
 
 - Install Visual Studio Code on [Linux](https://code.visualstudio.com/docs/setup/linux), [MacOS](https://code.visualstudio.com/docs/setup/mac), or [Windows](https://code.visualstudio.com/docs/setup/windows)
-- [Install the C/C++ extension for Visual Studio Code](https://code.visualstudio.com/docs/languages/cpp)
-- For Windows + WSL, see this tutorial: [Using C++ and WSL in VS Code](https://code.visualstudio.com/docs/cpp/config-wsl)
+- [Install the C/C++ extension for VSCode](https://code.visualstudio.com/docs/languages/cpp)
+- [Install the CMake Tools extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+- If VSCode does not recognize yout CMake project, [follow this guide](https://code.visualstudio.com/docs/cpp/cmake-quickstart#_Create-a-CMakePresets.json-file)
+- For Windows + WSL, see this tutorial: [Using C++ and WSL in VSCode](https://code.visualstudio.com/docs/cpp/config-wsl)
 
-You can then use Visual Studio Code as a C++ editor and use the built-in terminal for compiling programs using `make`, then run or debug the programs, etc.
-
-#### Online IDE
-
-You can use [Replit](https://replit.com) as a (temporary) work-around.
+You can then use Visual Studio Code as a C++ editor and use the built-in terminal for compiling programs using `cmake` and `make`, then run or debug the programs, etc.

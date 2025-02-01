@@ -7,7 +7,8 @@ This repository contains an introduction to the programming environment used in 
 - [Using Linux](#using-linux)
 - [Using the terminal](#using-the-terminal)
 - [Compile and run "Hello world!" in C++](#compile-and-run-hello-world-in-c)
-- [Using VSCode](#using-vscode)
+- [Using CMake](#using-cmake)
+- [Using CLion](#using-clion)
 
 This introduction assumes you are using the computers available at FEUP. At the end of the document you also have a [section about setting up the environment in your PC](#environment-setup).
 
@@ -208,7 +209,7 @@ This example gives you a first impression of C++ syntax:
 
 - As you may note, `main` returns `0`. This is just a standard convention: `0` tells the operating system that the program executed successfully without errors. When there are errors, a program should return a value different than `0` (e.g., `-1`).
 
-### 3.3. Compile the program using GCC
+### Compile the program using GCC
 
 **To run the "Hello world!" program you need to compile it first**, that is, to generate an executable file containing binary machine instructions from the source code. This can be done using the GCC C++ compiler, that is, the `g++` program:
 
@@ -231,18 +232,26 @@ Hello world!
 
 Note: Compiling C++ code can be complex and on some setups, compiling by hand with this simple command might not work. For instance, if you are on Windows and using the MSYS version of the Clang compiler, you might need to add the flag `-lstdc++` to be able to compile. In the next section we will present a more robust way of compiling C++ code.
 
-### 3.4. Compile the program using CMake
+## Using CMake
+
+### Introduction to CMake
 
 Due to C++'s complex and diverse history, it has a very fragmented build automation landscape.
 So, unlike many modern programming languages that standardize around a single build system, the C++ ecosystem has a variety of tools, approaches, and practices.
 
 One of the first of these tools is `make`, a command-line utility for building programs according to configurations defined in a text file usually called `Makefile`. However, this is just one of the several possible tools, and is currently considered to be a very low-level build system, requiring a lot of manual effort from the programmer.
 
-**CMake** is what is considered a _meta-build tool_, which means that instead of directly compiling code, CMake will generate the build files for a variety of build systems. In FEUP PCs, CMake will generate by default a `Makefile` to be run with the command `make`.
+**CMake** is what is considered a _meta-build tool_, which means that instead of directly compiling code, CMake will generate the build files for a variety of build systems. In FEUP PCs, when we run CMake throught the terminal, it will generate by default a `Makefile` to be run with the command `make`.
 
 Compiling C++ code can generate many temporary files, and to avoid poluting the source folder with these files, developers employ what is usually called **out-of-source builds**. This is simply having a separate subfolder for the compilation, usually called `build`, where the temporary files will be written.
 
-To compile your program using CMake, make sure the file `CMakeLists.txt` is in the `prog` directory (recall step 3.1 above) and remove the `hello` executable, if you created it. The first step will be to generate the `Makefile` that will compile your code inside a `build` subfolder:
+### First CMake project
+
+Modern compilation flows are based around a build file, that indicates which source files, dependencies and compilation options (among other things) are needed to compile a program.
+
+CMake projects always have in their root folder a file with the name `CMakeLists.txt`, which contains all the information needed to build the program.
+
+To compile your program using CMake, make sure the file [`CMakeLists.txt`](CMakeLists.txt) is in the `prog` directory (recall the [step above](#compile-the-program-using-gcc)) and remove the `hello` executable file, if you created it. The first step will be to generate the `Makefile` that will compile your code inside a `build` subfolder:
 
 ```bash
 $ # Remove the executable just to make sure
@@ -279,84 +288,9 @@ The given file `CMakeLists.txt` customises C++ compilation with various options,
 e.g., `-std=c++17` sets the use of the C++ 2017 language standard. Check the [information available at the setup section](#compiler-settings-and-their-meaning) for details on the meaning of each option used.
 Bear in mind that **these same options will be configured in Moodle's automated code correction plugin (CodeRunner)** throughout the semester. Failing to use the given `CMakeLists.txt` may lead to different behavior in program compilation or execution.
 
-## Using VSCode
+### Modifying the `CMakeLists.txt` file
 
-### Launch VSCode
-
-Use the **Activities** search bar to look for Visual Studio Code. Then launch it.
-
-![](launch_vscode.png)
-
-### Open directory
-
-Choose **File > Open Folder** and select the `Desktop/prog` directory used in previous steps.
-
-![](vscode_open_folder_1.png)
-
-![](vscode_open_folder_2.png)
-
-### Inspect files and source code
-
-You may now browse the folder contents and have an editor window for
-source code.
-
-![](vscode_perspective.png)
-
-### Launch embedded terminal
-
-You can also launch the embedded terminal to execute commands, in particular to compile and execute programs.
-
-![](vscode_terminal_1.png)
-
-![](vscode_terminal_2.png)
-
-### Create a new program
-
-Let us create another C++ program with the
-following code:
-
-```cpp
-#include <iostream>
-
-int main() {
-  int value;
-  std::cin >> value;
-  std::cout << "The value you entered was: " << value << "!\n";
-  return 0;
-}
-```
-
-This program reads an integer value input by the user and then prints it.
-
-In VSCode you can create the new program, compile and run it as follows:
-
-- Access **File > New Text File**.
-- Copy the C++ code above to the editor tab for the new file.
-- Access **File > Save**. Give the file a name, e.g., `enter_value.cpp`.
-- Use the embedded terminal to compile and run the program as in the "Hello world!" example.
-
-![](vscode_new_text_file.png)
-
-![](vscode_save_file.png)
-
-![](vscode_terminal_3.png)
-
-## Environment Setup
-
-### Basic requirements
-
-1. Linux or Linux-compatible environment.
-2. Required installation: [GCC](https://gcc.gnu.org) (C/C++ compiler), [Make](https://www.gnu.org/software/make/) (build tool) and [CMake](https://cmake.org/) (meta-build tool).
-3. Optional (but recommended): [GDB](https://www.sourceware.org/gdb/) (C/C++ debugger).
-4. [Visual Studio Code](https://code.visualstudio.com/) or a simple text editor of your choice.
-
-**All these tools are installed in FEUP's labs running Linux.**
-
-### Compilation settings
-
-#### CMake
-
-During this course you will not need to modify the `CMakeLists.txt` file, however, if you want to create your own programs, you can use this [`CMakeLists.txt`](CMakeLists.txt) as a base.
+If you want to create your own programs, you can use this [`CMakeLists.txt`](CMakeLists.txt) as a base.
 
 _Tip_: Remove the line `add_executable(hello hello.cpp)` if you want to remove the compilation of that program from your build file.
 
@@ -388,6 +322,8 @@ To compile a program with several sources, specify the required files in the `ad
 add_executable(hello_again hello_again.cpp say_hello.cpp)
 ```
 
+_Tip_: The first argument of `add_executable` is the name of the program, and can be different from the name of the source files.
+
 If the program requires header files (i.e., files with extension .h), after you declare the program (i.e., `hello_again`) with the `add_executable` command, you can use the command `target_include_directories`:
 
 ```cmake
@@ -395,6 +331,109 @@ target_include_directories(hello_again PUBLIC include)
 ```
 
 `include` is the path to the folder with the header files, relative to the `CMakeLists.txt` file, and `PUBLIC` is a keyword specifying the scope of the include (could be `INTERFACE`, `PUBLIC` or `PRIVATE`, for more details you can check [here](https://cmake.org/cmake/help/latest/command/target_include_directories.html)).
+
+## Using CLion
+
+### Launch CLion
+
+Use the **Activities** search bar to look for CLion. Then launch it.
+
+![](img/clion_launch.png)
+
+### (Optional) Import settings
+
+If asked if you want to import settings, you can skip it.
+
+![](img/clion_import.png)
+
+### Open project
+
+If no project is open, you can choose the option in the middle, _Open_ (first image). Otherwise, from the menu choose **File > Open...**. In both cases, select the `Desktop/prog` directory used in previous steps (second image). CLion projects are based on CMake, so you have to indicate a directory that contains a `CMakeLists.txt` file. Notice that if a directory contains a `CMakeLists.txt` file, it will have a black box icon, representing a terminal.
+
+![](img/clion_open_folder_1.png)
+
+![](img/clion_open_folder_2.png)
+
+If it asks to trust the project, you can say yes.
+
+![](img/clion_trust.png)
+
+### Build environment
+
+If it is the first time launching CLion, it may ask to configure the build environment. CLion has a bundled build environment for C/C++ compilation, you can choose _Skip Wizard and Use Defaults_.
+
+Note that by default, CLion might use Ninja instead of Makefile as the build tool. Ninja is just another build tool, more recent that Makefile, and more adequate for meta-build tools such as CMake.
+
+![](img/clion_build_env.png)
+
+### Inspect files and source code
+
+You may now browse your project contents and have an editor window for
+source code.
+
+![](img/clion_inspect_files.png)
+
+### Launch program
+
+After the build process finishes in the background, and assuming there are no compilation erros, if your project has a source file with a `main()` function, there should appear an arrow next to it. Click it and choose `Run 'hello'` to launch the program called _hello_. The output will appear below.
+
+![](img/clion_launch_1.png)
+
+![](img/clion_launch_2.png)
+
+![](img/clion_launch_3.png)
+
+### Create a new program
+
+Let us create another C++ program with the
+following code:
+
+```cpp
+#include <iostream>
+
+int main() {
+  int value;
+  std::cin >> value;
+  std::cout << "The value you entered was: " << value << "!\n";
+  return 0;
+}
+```
+
+This program reads an integer value input by the user and then prints it.
+
+In CLion you can create and run the new program by editing the file `CMakeLists.txt` as follows:
+
+- Access **File > New > C/C++ Source File**.
+- Give a name to the file (e.g., `enter_value.cpp`) and uncheck **Add to targets**.
+- Copy the C++ code above to the editor tab for the new file.
+- Open the file `CMakeLists.txt` and add the line `add_executable(enter_value enter_value.cpp)`. If the icon below appears, click it, it will refresh the project.
+
+  ![](img/clion_cmake_reload.png)
+
+- Go to the file `enter_value.cpp`, click the green arrow next to the main function and \*_Run 'enter_value'_ to run the new program.
+
+![](img/clion_new_program_1.png)
+
+![](img/clion_new_program_2.png)
+
+![](img/clion_new_program_3.png)
+
+![](img/clion_new_program_4.png)
+
+![](img/clion_new_program_5.png)
+
+## Environment Setup
+
+### Basic requirements
+
+1. Linux or Linux-compatible environment.
+2. Required installation: [GCC](https://gcc.gnu.org) (C/C++ compiler), [Make](https://www.gnu.org/software/make/) (build tool) and [CMake](https://cmake.org/) (meta-build tool).
+3. Optional (but recommended): [GDB](https://www.sourceware.org/gdb/) (C/C++ debugger).
+4. [CLion](https://www.jetbrains.com/clion) IDE.
+
+**All these tools are installed in FEUP's labs running Linux.**
+
+### Compilation settings
 
 #### Compiler settings and their meaning
 
@@ -496,16 +535,11 @@ The [LLVM clang version configured through Homebrew](https://formulae.brew.sh/fo
 
 Check the instructions given for Windows and VirtualBox above.
 
-#### Visual Studio Code setup
+#### CLion setup
 
-**Note**: Visual Studio Code does not include GCC, GDB, Make or CMake. Install those tools first as described above.
+**Note**: CLion already includes some tools, such as CMake or GDB, but you will need to install the C/C++ compiler and the build tool (e.g., Makefile). Install first the needed tools described above.
 
 Steps:
 
-- Install Visual Studio Code on [Linux](https://code.visualstudio.com/docs/setup/linux), [MacOS](https://code.visualstudio.com/docs/setup/mac), or [Windows](https://code.visualstudio.com/docs/setup/windows)
-- [Install the C/C++ extension for VSCode](https://code.visualstudio.com/docs/languages/cpp)
-- [Install the CMake Tools extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
-- If VSCode does not recognize yout CMake project, [follow this guide](https://code.visualstudio.com/docs/cpp/cmake-quickstart#_Create-a-CMakePresets.json-file)
-- For Windows + WSL, see this tutorial: [Using C++ and WSL in VSCode](https://code.visualstudio.com/docs/cpp/config-wsl)
-
-You can then use Visual Studio Code as a C++ editor and use the built-in terminal for compiling programs using `cmake` and `make`, then run or debug the programs, etc.
+- Get a [JetBrains Education License](https://www.jetbrains.com/community/education/#students/)
+- Download and install [CLion](https://www.jetbrains.com/clion/)

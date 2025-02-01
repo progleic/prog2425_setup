@@ -29,9 +29,9 @@ A terminal lets you introduce commands that are interpreted by what is called a 
 
 Click on **Activities** (upper-left desktop corner) then enter **Terminal** in the search bar. The **Terminal** application icon should appear. Click on it to launch a terminal.
 
-![](open_terminal.png)
+![](img/open_terminal.png)
 
-![](terminal.png)
+![](img/terminal.png)
 
 ### Try a few basic commands
 

@@ -410,7 +410,7 @@ In CLion you can create and run the new program by editing the file `CMakeLists.
 
   ![](img/clion_cmake_reload.png)
 
-- Go to the file `enter_value.cpp`, click the green arrow next to the main function and \*_Run 'enter_value'_ to run the new program.
+- Go to the file `enter_value.cpp`, click the green arrow next to the main function and choose **Run 'enter_value'** to run the new program.
 
 ![](img/clion_new_program_1.png)
 

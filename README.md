@@ -122,22 +122,19 @@ If you want to learn more about the command line, there is a tutorial available 
 
 ### Get the necessary files
 
-Download these two files:
+Download the file [`hello.cpp`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/hello.cpp), which is the C++ source code of the "Hello world!" program.
 
-1. [`hello.cpp`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/hello.cpp): the C++ source code of the "Hello world!" program
-2. [`CMakeLists.txt`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/CMakeLists.txt): CMake build file for compilation.
-
-Usually the files will be downloaded automatically to the `Downloads` directory.
-You can copy them to the `prog` directory you created in previously (**step 2**) using `cp`.
+Usually the file will be downloaded automatically to the `Downloads` directory.
+You can copy it to the `prog` directory you created in previously (**step 2**) using `cp`.
 
 ```bash
 $ # "cd" with no arguments: working directory set to home directory
 $ cd
 $ pwd
 /home/upXXXXXXX
-$ cp Downloads/hello.cpp Downloads/CMakeLists.txt Desktop/prog
+$ cp Downloads/hello.cpp Desktop/prog
 $ ls Desktop/prog
-hello.cpp CMakeLists.txt
+hello.cpp
 ```
 
 ### The source code
@@ -220,7 +217,7 @@ $ cat hello.cpp      # will show the contents above
 $ # Compile the program
 $ g++ hello.cpp -o hello
 $ ls
-CMakeLists.txt hello hello.cpp
+hello hello.cpp
 ```
 
 The execution above of `g++ hello.cpp -o hello` compiles the C++ source code in `hello.cpp` to an executable file called `hello` (with no extension). We can now run the executable file ...
@@ -251,7 +248,7 @@ Modern compilation flows are based around a build file, that indicates which sou
 
 CMake projects always have in their root folder a file with the name `CMakeLists.txt`, which contains all the information needed to build the program.
 
-To compile your program using CMake, make sure the file [`CMakeLists.txt`](CMakeLists.txt) is in the `prog` directory (recall the [step above](#compile-the-program-using-gcc)) and remove the `hello` executable file, if you created it. The first step will be to generate the `Makefile` that will compile your code inside a `build` subfolder:
+To compile your program using CMake, first download the file [`CMakeLists.txt`](CMakeLists.txt) and make sure it is in the `prog` directory (recall the [step above](#compile-the-program-using-gcc)). Remove the `hello` executable file, if you created it (i.e., `rm hello`). The first step will be to generate the `Makefile` that will compile your code inside a `build` subfolder:
 
 ```bash
 $ # Remove the executable just to make sure
@@ -290,7 +287,7 @@ Bear in mind that **these same options will be configured in Moodle's automated 
 
 ### Modifying the `CMakeLists.txt` file
 
-If you want to create your own programs, you can use this [`CMakeLists.txt`](CMakeLists.txt) as a base.
+If you want to create your own programs, you can use the same [`CMakeLists.txt`](CMakeLists.txt) as a base.
 
 _Tip_: Remove the line `add_executable(hello hello.cpp)` if you want to remove the compilation of that program from your build file.
 

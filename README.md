@@ -220,7 +220,7 @@ $ cat hello.cpp      # will show the contents above
 $ # Compile the program
 $ g++ hello.cpp -o hello
 $ ls
-Makefile hello hello.cpp
+CMakeLists.txt hello hello.cpp
 ```
 
 The execution above of `g++ hello.cpp -o hello` compiles the C++ source code in `hello.cpp` to an executable file called `hello` (with no extension). We can now run the executable file ...

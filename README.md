@@ -419,6 +419,12 @@ In CLion you can create and run the new program by editing the file `CMakeLists.
 
 ![](img/clion_new_program_5.png)
 
+### (Optional) Actions on Save
+
+CLion automatically saves the files as you type, however we recommend that you enable "Actions on Save", so that every time you hit `Ctrl + S` a set of clean-up actions execute. At minimum, we recommend you leave enabled the options `Reformat Code` and `Optimize Imports`.
+
+![](img/clion_actions_on_save.png)
+
 ## Environment Setup
 
 ### Basic requirements

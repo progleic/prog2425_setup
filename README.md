@@ -542,7 +542,20 @@ Check the instructions given for Windows and VirtualBox above.
 
 **Note**: CLion already includes some tools, such as CMake or GDB, but you will need to install the C/C++ compiler and the build tool (e.g., Makefile). Install first the needed tools described above.
 
+##### Website Installer
+
 Steps:
 
 - Get a [JetBrains Education License](https://www.jetbrains.com/community/education/#students/)
 - Download and install [CLion](https://www.jetbrains.com/clion/)
+
+##### Snap
+
+CLion is available as a Snap package in Ubuntu 24.04:
+
+```bash
+sudo sudo apt update
+sudo apt install snapd # snap
+sudo snap install clion --classic # clion w/ snap
+```
+ 

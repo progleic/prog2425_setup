@@ -542,16 +542,21 @@ Check the instructions given for Windows and VirtualBox above.
 
 **Note**: CLion already includes some tools, such as CMake or GDB, but you will need to install the C/C++ compiler and the build tool (e.g., Makefile). Install first the needed tools described above.
 
-##### Website Installer
+##### Obtain a JetBrains Education License
 
 Steps:
 
-- Get a [JetBrains Education License](https://www.jetbrains.com/community/education/#students/)
-- Download and install [CLion](https://www.jetbrains.com/clion/)
+- Apply for the [JetBrains Education License](https://www.jetbrains.com/community/education/#students/)
+- Choose _For students and teachers_ 
+- Click _Apply Now_
+- Fill the form, use your institutional email
+- Validate the email
 
-##### Snap
+##### Install CLion
 
-CLion is available as a Snap package in Ubuntu 24.04:
+You can manually download and install [CLion](https://www.jetbrains.com/clion/)
+
+Alternativelly, CLion is also available as a Snap package in Ubuntu 24.04:
 
 ```bash
 sudo sudo apt update
@@ -559,3 +564,6 @@ sudo apt install snapd # snap
 sudo snap install clion --classic # clion w/ snap
 ```
  
+##### Login to CLion
+
+When you first start CLion, use your JetBrains Education License to login.

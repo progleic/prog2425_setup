@@ -291,7 +291,7 @@ If you want to create your own programs, you can use the same [`CMakeLists.txt`]
 
 _Tip_: Remove the line `add_executable(hello hello.cpp)` if you want to remove the compilation of that program from your build file.
 
-To compile program `x` with source code `x.cpp` you have to add an `add_executable` command in the `CMakeLists.txt` file:
+To compile program `x` with source code [`x.cpp`](x.cpp) you have to add an `add_executable` command in the `CMakeLists.txt` file:
 
 ```cmake
 # ...other commands
@@ -547,7 +547,7 @@ Check the instructions given for Windows and VirtualBox above.
 Steps:
 
 - Apply for the [JetBrains Education License](https://www.jetbrains.com/community/education/#students/)
-- Choose _For students and teachers_ 
+- Choose _For students and teachers_
 - Click _Apply Now_
 - Fill the form, use your institutional email
 - Validate the email
@@ -563,7 +563,7 @@ sudo sudo apt update
 sudo apt install snapd # snap
 sudo snap install clion --classic # clion w/ snap
 ```
- 
+
 ##### Login to CLion
 
 When you first start CLion, use your JetBrains Education License to login.

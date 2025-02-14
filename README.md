@@ -383,7 +383,7 @@ For the practical classes, we recommend that you use the following sequence of s
 
 ### Create a project for the practical class
 
-Each folder with a `CMakeLists.txt` file usually represents a project. To keep your code organized, you suggest that you use a folder per practical quizz.
+Each folder with a `CMakeLists.txt` file usually represents a project. To keep your code organized, we suggest that you use a folder per practical quizz.
 Start by creating a folder, for instance, `P01`. Copy the base [`CMakeLists.txt`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/tp1/CMakeLists.txt) to the folder, this will be the root of your project.
 
 ```bash
@@ -406,7 +406,7 @@ You can create a new file by accessing **File > New > C/C++ Source File**.
 
 ![alt text](img/clion_new_file.png)
 
-Write the name that the exercise requires for the file. If the box _Add to targets_ is checked, be sure to uncheck it. This checkbox automatically changes the file `CMakeLists.txt` to add the file to an executable, but we will be changing the file manually.
+Write the name that the exercise requires for the file. If the box _Add to targets_ is checked, be sure to uncheck it. This checkbox automatically changes the file `CMakeLists.txt` to add the file to an `add_executable` command, but we will be changing the file manually.
 
 Click _OK_.
 
@@ -433,6 +433,23 @@ If you have enabled auto-reload of the `CMakeLists.txt` file, in the top-right c
 ![](img/clion_outside_file_1.png)
 
 ![](img/clion_outside_file_2.png)
+
+### Add a second program to CMakeLists.txt
+
+After you complete the first exercise, repeat the steps above to add a new file and executable for the second exercise.
+
+Add the second file:
+
+![](img/clion_second_program_1.png)
+
+Add the new program in `CMakeLists.txt`:
+
+![](img/clion_second_program_2.png)
+
+Check the new run configuration:
+
+![](img/clion_second_program_3.png)
+
 
 **Warning**: When you use the green arrow in the top-right corner, it will run the configuration that is currently selected, independently of the source file that is open. In the example below, clicking the green arrow wil run the program `char-types`, even if the currently selected file is `fizz-buzz.cpp`.
 

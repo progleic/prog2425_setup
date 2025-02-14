@@ -8,7 +8,8 @@ This repository contains an introduction to the programming environment used in 
 - [Using the terminal](#using-the-terminal)
 - [Compile and run "Hello world!" in C++](#compile-and-run-hello-world-in-c)
 - [Using CMake](#using-cmake)
-- [Using CLion](#using-clion)
+- [Using CLion for the first time](#using-clion-for-the-first-time)
+- [Practical classes step-by-step](#practical-classes-step-by-step)
 
 This introduction assumes you are using the computers available at FEUP. At the end of the document you also have a [section about setting up the environment in your PC](#environment-setup).
 
@@ -329,7 +330,7 @@ target_include_directories(hello_again PUBLIC include)
 
 `include` is the path to the folder with the header files, relative to the `CMakeLists.txt` file, and `PUBLIC` is a keyword specifying the scope of the include (could be `INTERFACE`, `PUBLIC` or `PRIVATE`, for more details you can check [here](https://cmake.org/cmake/help/latest/command/target_include_directories.html)).
 
-## Using CLion
+## Using CLion for the first time
 
 ### Launch CLion
 
@@ -347,6 +348,8 @@ If asked if you want to import settings, you can skip it.
 
 If no project is open, you can choose the option in the middle, _Open_ (first image). Otherwise, from the menu choose **File > Open...**. In both cases, select the `Desktop/prog` directory used in previous steps (second image). CLion projects are based on CMake, so you have to indicate a directory that contains a `CMakeLists.txt` file. Notice that if a directory contains a `CMakeLists.txt` file, it will have a black box icon, representing a terminal.
 
+If you are starting from scratch, you can download this base [`CMakeLists.txt`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/tp1/CMakeLists.txt) to a folder, and use that folder as the root of your project.
+
 ![](img/clion_open_folder_1.png)
 
 ![](img/clion_open_folder_2.png)
@@ -363,67 +366,73 @@ Note that by default, CLion might use Ninja instead of Makefile as the build too
 
 ![](img/clion_build_env.png)
 
-### Inspect files and source code
-
-You may now browse your project contents and have an editor window for
-source code.
-
-![](img/clion_inspect_files.png)
-
-### Launch program
-
-After the build process finishes in the background, and assuming there are no compilation erros, if your project has a source file with a `main()` function, there should appear an arrow next to it. Click it and choose `Run 'hello'` to launch the program called _hello_. The output will appear below.
-
-![](img/clion_launch_1.png)
-
-![](img/clion_launch_2.png)
-
-![](img/clion_launch_3.png)
-
-### Create a new program
-
-Let us create another C++ program with the
-following code:
-
-```cpp
-#include <iostream>
-
-int main() {
-  int value;
-  std::cin >> value;
-  std::cout << "The value you entered was: " << value << "!\n";
-  return 0;
-}
-```
-
-This program reads an integer value input by the user and then prints it.
-
-In CLion you can create and run the new program by editing the file `CMakeLists.txt` as follows:
-
-- Access **File > New > C/C++ Source File**.
-- Give a name to the file (e.g., `enter_value.cpp`) and uncheck **Add to targets**.
-- Copy the C++ code above to the editor tab for the new file.
-- Open the file `CMakeLists.txt` and add the line `add_executable(enter_value enter_value.cpp)`. If the icon below appears, click it, it will refresh the project.
-
-  ![](img/clion_cmake_reload.png)
-
-- Go to the file `enter_value.cpp`, click the green arrow next to the main function and choose **Run 'enter_value'** to run the new program.
-
-![](img/clion_new_program_1.png)
-
-![](img/clion_new_program_2.png)
-
-![](img/clion_new_program_3.png)
-
-![](img/clion_new_program_4.png)
-
-![](img/clion_new_program_5.png)
-
 ### (Optional) Actions on Save
 
 CLion automatically saves the files as you type, however we recommend that you enable "Actions on Save", so that every time you hit `Ctrl + S` a set of clean-up actions execute. At minimum, we recommend you leave enabled the options `Reformat Code` and `Optimize Imports`.
 
 ![](img/clion_actions_on_save.png)
+
+## Practical Classes Step-By-Step
+
+For the practical classes, we recommend that you use the following sequence of steps.
+
+### Create a project for the practical class
+
+Each folder with a `CMakeLists.txt` file usually represents a project. To keep your code organized, you suggest that you use a folder per practical quizz.
+Start by creating a folder, for instance, `P01`. Copy the base [`CMakeLists.txt`](https://raw.githubusercontent.com/progleic/prog2425_setup/refs/heads/main/tp1/CMakeLists.txt) to the folder, this will be the root of your project.
+
+```bash
+$ # Contents of folder P01
+$ ls
+CMakeLists.txt
+```
+
+Launch CLion, an open the folder `P01`. When the _Open Project Wizard_ window appears, be sure to check the box _Reload CMake project on editing CMakeLists.txt or other CMake configuration files_. Otherwise you will have to manually reload everytime you change the `CMakeLists.txt` file.
+
+Click _OK_.
+
+![alt text](/img/clion_open_wizard.png)
+
+### Create a new C++ file
+
+You can create a new file by accessing **File > New > C/C++ Source File**.
+
+**Warning**: If you choose _C++ Class_ it will create a `.cpp`/`.h` pair, you do not need this now, we will only use it by mid-semester.
+
+![alt text](img/clion_new_file.png)
+
+Write the name that the exercise requires for the file. If the box _Add to targets_ is checked, be sure to uncheck it. This checkbox automatically changes the file `CMakeLists.txt` to add the file to an executable, but we will be changing the file manually.
+
+Click _OK_.
+
+![alt text](img/clion_new_file_2.png)
+
+### Add a program to CMakeLists.txt
+
+Open the file `CMakeLists.txt`, and at the end of the file, use the command `add_executable` to create a new executable (e.g., `add_executable(fizz-buzz fizz-buzz.cpp)`).
+
+![alt text](img/clion_new_file_3.png)
+
+If you have enabled auto-reload of the `CMakeLists.txt` file, in the top-right corner a new configuration will appear for the executable you just added, with the same name as the one given to the executable. Click the green arrow to run the program.
+
+![alt text](img/clion_new_file_4.png)
+
+**Warning**: If the icon below appears, it means that auto-reload is not enabled, and you need to click the icon to refresh the project. To enable auto-reload you can access **File > Settings... > Build, Execution, Deployment > CMake** and check the first checkbox.
+
+![](img/clion_cmake_reload.png)
+
+**Warning**: If your executable does not have a `main()` function, when you run it there will be a linker error similar to `undefined reference to 'main'`/`undefined reference to 'WinMain'`.
+
+**Warning**: When you create a `.cpp` file with a `main()` function, a green arrow will appear next to the function, which you can use it to run it. However, if this file is not used in any `add_executable` command, it will be "outside" of your project, and the flags that we have defined (e.g., `-std=c++17`) will not be applied! Notice that in this case, the icon in the run configurations on the top-right corner is a purple C, and not a terminal icon.
+
+![](img/clion_outside_file_1.png)
+
+![](img/clion_outside_file_2.png)
+
+**Warning**: When you use the green arrow in the top-right corner, it will run the configuration that is currently selected, independently of the source file that is open. In the example below, clicking the green arrow wil run the program `char-types`, even if the currently selected file is `fizz-buzz.cpp`.
+
+![](img/clion_run_configuration.png)
+
 
 ## Environment Setup
 
@@ -480,6 +489,8 @@ sudo apt install gdb
 
 #### Windows
 
+Recent CLion versions already have bundled CMake and a C++ compiler (i.e., based on MinGW), and should not require additional setup. However, below are some suggestions in can you want to try a development environment similar to Linux, on Windows.
+
 ##### Windows Subsystem for Linux (WSL) - RECOMMENDED
 
 Use the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/about), which you can see how to install [here](https://learn.microsoft.com/en-us/windows/wsl/).
@@ -514,8 +525,9 @@ MSYS provides a lightweight POSIX-like command-line environment, similar to `bas
 
 Installation of this environment is out-of-scope for this course, but MSYS provides an [easy-to-use installer](https://www.msys2.org/).
 
-**Warning**: The flags `-fsanitize=address` and `-fsanitize=undefined` do not work with the default C++ compilers of MinGW. If you want to keep those flags in a MinGW build environment, you have to use a special version of `clang` (another open-source C++ compiler), `g++` will not work.
+**Warning**: The flags `-fsanitize=address` and `-fsanitize=undefined` do not work with the default C++ compilers of MinGW, you will have errors similar to `cannot find -lasan` and `cannot find -lubsan`. To solve these errors, remove those flags from the `CMakeLists.txt` file.
 
+If you want to keep those flags in a MinGW build environment, you have to use a special version of the compiler `clang` (another open-source C++ compiler), `g++` will not work.
 To install the `clang64` version in MinGW use the command `pacman -S mingw-w64-clang-x86_64-clang`. When compiling (or generating the build files with CMake), make sure that the executable that is used is `/clang64/bin/clang`. The default executable `/mingw64/bin/clang` will not support the sanitization flags.
 
 #### MacOS

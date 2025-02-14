@@ -11,7 +11,16 @@ This repository contains an introduction to the programming environment used in 
 - [Using CLion for the first time](#using-clion-for-the-first-time)
 - [Practical classes step-by-step](#practical-classes-step-by-step)
 
-This introduction assumes you are using the computers available at FEUP. At the end of the document you also have a [section about setting up the environment in your PC](#environment-setup).
+This introduction assumes you are using the computers available at FEUP. At the end of the document you also have a [section about setting up the environment in your PC](#environment-setup), for several operating systems, and also how to install CLion:
+
+
+- [Linux Setup](#linux)
+- [Windows Setup](#windows)
+- [MacOS Setup](#macos)
+- [CLion Setup](#clion-setup)
+ 
+
+
 
 ## Using Linux
 
@@ -489,7 +498,7 @@ sudo apt install gdb
 
 #### Windows
 
-Recent CLion versions already have bundled CMake and a C++ compiler (i.e., based on MinGW), and should not require additional setup. However, below are some suggestions in can you want to try a development environment similar to Linux, on Windows.
+Recent CLion versions already have bundled CMake and a C++ compiler (i.e., based on MinGW), and should not require additional setup. However, below are some suggestions in case you want to try a development environment similar to Linux, on Windows.
 
 ##### Windows Subsystem for Linux (WSL) - RECOMMENDED
 
@@ -552,7 +561,7 @@ Check the instructions given for Windows and VirtualBox above.
 
 #### CLion setup
 
-**Note**: CLion already includes some tools, such as CMake or GDB, but you will need to install the C/C++ compiler and the build tool (e.g., Makefile). Install first the needed tools described above.
+**Note**: CLion already includes some tools, such as CMake or GDB, but in some systems (e.g., Linux) you might need to install the C/C++ compiler and the build tool (e.g., Makefile). Install first the needed tools described above.
 
 ##### Obtain a JetBrains Education License
 

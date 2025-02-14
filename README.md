@@ -13,14 +13,10 @@ This repository contains an introduction to the programming environment used in 
 
 This introduction assumes you are using the computers available at FEUP. At the end of the document you also have a [section about setting up the environment in your PC](#environment-setup), for several operating systems, and also how to install CLion:
 
-
 - [Linux Setup](#linux)
 - [Windows Setup](#windows)
 - [MacOS Setup](#macos)
 - [CLion Setup](#clion-setup)
- 
-
-
 
 ## Using Linux
 
@@ -422,7 +418,7 @@ Open the file `CMakeLists.txt`, and at the end of the file, use the command `add
 
 ![alt text](img/clion_new_file_3.png)
 
-If you have enabled auto-reload of the `CMakeLists.txt` file, in the top-right corner a new configuration will appear for the executable you just added, with the same name as the one given to the executable. Click the green arrow to run the program.
+If you have enabled auto-reload of the `CMakeLists.txt` file, in the top-right corner a new run configuration will appear for the executable you just added, with the same name as the one given to the executable. Click the green arrow to run the program.
 
 ![alt text](img/clion_new_file_4.png)
 
@@ -441,7 +437,6 @@ If you have enabled auto-reload of the `CMakeLists.txt` file, in the top-right c
 **Warning**: When you use the green arrow in the top-right corner, it will run the configuration that is currently selected, independently of the source file that is open. In the example below, clicking the green arrow wil run the program `char-types`, even if the currently selected file is `fizz-buzz.cpp`.
 
 ![](img/clion_run_configuration.png)
-
 
 ## Environment Setup
 

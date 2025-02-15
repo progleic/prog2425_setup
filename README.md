@@ -428,6 +428,8 @@ If you have enabled auto-reload of the `CMakeLists.txt` file, in the top-right c
 
 **Warning**: If your executable does not have a `main()` function, when you run it there will be a linker error similar to `undefined reference to 'main'`/`undefined reference to 'WinMain'`.
 
+**Warning**: If you get the errors `cannot find -lasan` and `cannot find -lubsan` you probably are executing on Windows, with a default MinGW compiler. The flags `-fsanitize=address` and `-fsanitize=undefined` do not work with the default C++ compilers of MinGW, remove those flags from the `CMakeLists.txt` file. If you want to use those flags with MinGW, check the section about [MinGW setup](#alternative---msysmingw).
+
 **Warning**: When you create a `.cpp` file with a `main()` function, a green arrow will appear next to the function, which you can use it to run it. However, if this file is not used in any `add_executable` command, it will be "outside" of your project, and the flags that we have defined (e.g., `-std=c++17`) will not be applied! Notice that in this case, the icon in the run configurations on the top-right corner is a purple C, and not a terminal icon.
 
 ![](img/clion_outside_file_1.png)
@@ -546,10 +548,10 @@ MSYS provides a lightweight POSIX-like command-line environment, similar to `bas
 
 Installation of this environment is out-of-scope for this course, but MSYS provides an [easy-to-use installer](https://www.msys2.org/).
 
-**Warning**: The flags `-fsanitize=address` and `-fsanitize=undefined` do not work with the default C++ compilers of MinGW, you will have errors similar to `cannot find -lasan` and `cannot find -lubsan`. To solve these errors, remove those flags from the `CMakeLists.txt` file.
+**Warning**: The flags `-fsanitize=address` and `-fsanitize=undefined` do not work with the default C++ compilers of MinGW, you will have errors similar to `cannot find -lasan` and `cannot find -lubsan`.
 
 If you want to keep those flags in a MinGW build environment, you have to use a special version of the compiler `clang` (another open-source C++ compiler), `g++` will not work.
-To install the `clang64` version in MinGW use the command `pacman -S mingw-w64-clang-x86_64-clang`. When compiling (or generating the build files with CMake), make sure that the executable that is used is `/clang64/bin/clang`. The default executable `/mingw64/bin/clang` will not support the sanitization flags.
+To install the `clang64` version in MinGW use the command `pacman -S mingw-w64-clang-x86_64-clang` inside a MinGW shell. When compiling (or generating the build files with CMake), make sure that the executable that is used is `/clang64/bin/clang`. The default executable `/mingw64/bin/clang` will not support the sanitization flags.
 
 #### MacOS
 

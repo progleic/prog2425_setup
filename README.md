@@ -437,7 +437,7 @@ If you have enabled auto-reload of the `CMakeLists.txt` file, in the top-right c
 ![](img/clion_outside_file_2.png)
 
 
-**Warning**: If no run configuration with a terminal icon appears, you might be using an older version of CLion. In that case, you can run the program using the green arrow next to the `main()` function, but make sure you first add the file to `CMakeLists.txt`, otherwise no flags will be applied to your program.
+**Warning**: If no run configuration with a terminal icon appears, it might mean that your code has errors, or that you might be using an older version of CLion. In that case, you can run the program using the green arrow next to the `main()` function, but make sure you first add the file to `CMakeLists.txt`, otherwise no flags will be applied to your program.
 
 ### Add a second program to CMakeLists.txt
 
